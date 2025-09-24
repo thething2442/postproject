@@ -1,6 +1,7 @@
 'use client'
 import { useUser, useClerk } from "@clerk/nextjs"
 import { redirect } from "next/navigation";
+import { useState,useEffect } from "react";
 import { Avatar, AvatarImage } from "./components/ui/avatar";
 import {
   DropdownMenu,
