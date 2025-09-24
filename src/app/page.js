@@ -1,37 +1,21 @@
-'use client'
-import { useUser, useClerk } from "@clerk/nextjs"
-import { redirect } from "next/navigation";
-import { useState,useEffect } from "react";
-import { Avatar, AvatarImage } from "./components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./components/ui/dropdown-menu";
-
-export default function LoginPage() {
-  const {user,isLoaded,isSignedIn} = useUser();
-  const { signOut } = useClerk();
-
-  if(!isLoaded){return <div>Loading...</div> }
-  if(!isSignedIn){redirect('/sign-up')}
-  return (
-    <div className="min-h-screen bg-background dark p-4 flex justify-end">
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Avatar>
-              <AvatarImage src={user.imageUrl} />
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => signOut({ redirectUrl: '/sign-in' })}>Sign Out</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-    </div>  
-  )
-}
+  'use client';
+  import { Users } from "lucide-react";
+  import LoginPage from "../components/login/page";
+  export default function App() {
+    return (
+      <div className="text-center space-y-4">
+        <div className="flex justify-center">
+          <div className="flex items-center justify-center w-16 h-16 bg-primary rounded-2xl">
+            <Users className="w-8 h-8 text-primary-foreground" />
+          </div>
+        </div>
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight text-balance">Welcome to ConnectHub</h1>
+          <p className="text-muted-foreground text-pretty">
+            Connect with friends, share moments, and discover new communities
+          </p>
+        </div>
+        <LoginPage />
+      </div>
+    )
+  }

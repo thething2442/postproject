@@ -12,11 +12,13 @@
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "@/src/app/components",
+    "components": "@/components",
     "utils": "@/lib/utils",
     "ui": "@/components/ui",
     "lib": "@/lib",
     "hooks": "@/hooks"
   },
-  "registries": {}
+  "registries": {
+    "@clerk": "https://clerk.com/r/{name}.json"
+  }
 }
