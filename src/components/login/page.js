@@ -24,7 +24,7 @@ export default function LoginPage() {
     try {
       // Assuming your external backend has a login endpoint at /auth/login
       await post(`${apiLogin}/auth/login`, content);
-      router.push('/'); // Redirect to home page on successful login
+      router.push('/foryou'); // Redirect to home page on successful login
     } catch (err) {
       console.error('Login failed:', err);
       // Handle login error, e.g., display a message to the user
