@@ -162,7 +162,7 @@ export default function Dashboard() {
                   <div className="flex-1">
                     <Button variant="outline" className="w-full justify-start text-muted-foreground bg-transparent">
                       <Plus className="mr-2 h-4 w-4" />
-                      What's on your mind, John?
+                      What&apos;s on your mind, John?
                     </Button>
                   </div>
                 </div>
