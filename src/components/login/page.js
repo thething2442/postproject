@@ -8,9 +8,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import useApi from '@/hooks/use-api';
-import { Separator } from "@/components/ui/separator"
 import { Eye, EyeOff, Mail, Lock, Github, Chrome } from "lucide-react"
 export default function LoginPage() {
+  const apiLogin = process.env.NEXT_PUBLIC_API_BASE_URL
   const [showPassword, setShowPassword] = useState(false)
   const [content, setContent] = useState({
     email: "",
@@ -23,7 +23,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       // Assuming your external backend has a login endpoint at /auth/login
-      await post('/auth/login', content);
+      await post(`${apiLogin}/auth/login`, content);
       router.push('/'); // Redirect to home page on successful login
     } catch (err) {
       console.error('Login failed:', err);

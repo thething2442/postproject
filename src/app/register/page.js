@@ -10,6 +10,7 @@ import Link from 'next/link';
 import useApi from '@/hooks/use-api';
 
 export default function RegisterPage() {
+  const apiRegister = process.env.NEXT_PUBLIC_API_BASE_URL
   const [content, setContent] = useState({
     firstname: "",
     lastname: "",
@@ -23,7 +24,7 @@ export default function RegisterPage() {
     e.preventDefault();
     try {
       // Assuming your external backend has a register endpoint at /auth/register
-      await post('/auth/register', content);
+      await post(`/${apiRegister}/auth/register`, content);
       router.push('/login'); // Redirect to login page on successful registration
     } catch (err) {
       console.error('Registration failed:', err);
