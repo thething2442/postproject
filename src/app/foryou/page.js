@@ -4,51 +4,44 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Bell, Home, MessageCircle, Search, Settings, Users, Heart, Share, MoreHorizontal, Plus } from "lucide-react"
-import { useCallback, useEffect, useState } from "react"
-import useApi from "@/hooks/use-api"
+import { useEffect, useState } from "react"
+
 export default function Dashboard() {
-  const apiGet = process.env.NEXT_PUBLIC_GET_ALL_POST
   const [posts, setPosts] = useState([])
-  const { get, loading } = useApi()
-  const fetchPosts = useCallback(async () => {
+  const [loading, setLoading] = useState(true)
+
+  const fetchPosts = async () => {
+    setLoading(true);
     try {
-      const url = process.env.NEXT_PUBLIC_GET_ALL_POST;
-      if (!url) {
-        console.error("API URL environment variable NEXT_PUBLIC_GET_ALL_POST is not set.");
-        setPosts([]);
-        return;
-      }
-      const data = await get(url)
+      const response = await fetch("https://application-a695.onrender.com/api/posts");
+      const data = await response.json();
+
       if (data && data.posts) {
         const formattedPosts = data.posts.map(post => {
-          if (!post.createdAt || typeof post.createdAt !== "object") {
-            return { ...post, relativeTime: "Invalid date" }
-          }
-          const { year, month, day, hour, minute, second } = post.createdAt
-          if (year === undefined || month === undefined || day === undefined) {
-            return { ...post, relativeTime: "Invalid date" }
-          }
-          const date = new Date(year.low, month.low - 1, day.low, hour?.low || 0, minute?.low || 0, second?.low || 0)
+          const { year, month, day, hour, minute, second } = post.createdAt;
+          const date = new Date(year.low, month.low - 1, day.low, hour?.low || 0, minute?.low || 0, second?.low || 0);
           return {
             id: post.id,
             content: post.content,
             author: post.author,
             relativeTime: date.toLocaleString(),
           }
-        })
-        setPosts(formattedPosts)
+        });
+        setPosts(formattedPosts);
       } else {
-        setPosts([])
+        setPosts([]);
       }
     } catch (error) {
-      console.error("Error fetching posts:", error)
-      setPosts([])
+      console.error("Error fetching posts:", error);
+      setPosts([]);
+    } finally {
+      setLoading(false);
     }
-  }, [get])
+  };
 
   useEffect(() => {
-    fetchPosts()
-  }, [fetchPosts])
+    fetchPosts();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background dark">
